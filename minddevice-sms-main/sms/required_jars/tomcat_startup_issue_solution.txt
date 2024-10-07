@@ -1,0 +1,10 @@
+Hi,
+I have already found a root cause for this problem.
+There is a change in catalina.bat file on lines 196 and 201
+Tomcat 8.0.12
+:noJuliConfig
+set JAVA_OPTS=%JAVA_OPTS% %LOGGING_CONFIG%
+Tomcat 8.0.14
+:noJuliConfig
+set JAVA_OPTS=”%JAVA_OPTS% %LOGGING_CONFIG%”
+Removing quotation marks solves the problem.

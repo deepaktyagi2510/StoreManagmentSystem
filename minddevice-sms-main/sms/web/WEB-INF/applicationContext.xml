@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+   
+
+    <!-- PERSISTENCE SUPPORT (hibernate) -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/prakashsweetsdb"/>
+        <property name="username" value="root"/>
+        <property name="password" value="mdtech"/>
+        <property name="connectionProperties" value="defaultRowPrefetch=1000;defaultBatchValue=1000"/>
+    </bean>
+
+    <!--
+<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/mdtech_sms_db"/>
+        <property name="username" value="mdtech_root"/>
+        <property name="password" value="m[{}(D1t#:;t5318|"/>
+    </bean>
+    -->
+    
+    <bean id="sessionFactory"
+         class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean>
+
+    <tx:annotation-driven proxy-target-class="true"/>
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="template" class="org.springframework.orm.hibernate4.HibernateTemplate">  
+        <property name="sessionFactory" ref="sessionFactory"></property>  
+    </bean>
+    <!-- PERSISTENCE SUPPORT (hibernate) -->
+ 
+ 
+    <!-- Beans -->
+ 
+    <bean id="abstractDaoAnnotation" class="com.minddevicetech.abstract_dao.AbstractDaoAnnotation" scope="prototype">
+        <property name="template" ref="template" />
+    </bean>
+    <bean id="billDao" class="com.minddevicetech.dao.BillDao" scope="prototype">
+        <property name="abstractDaoAnnotation" ref="abstractDaoAnnotation" />
+    </bean>
+    <bean id="billItemDao" class="com.minddevicetech.dao.BillItemDao" scope="prototype">
+        <property name="abstractDaoAnnotation" ref="abstractDaoAnnotation" />
+    </bean>
+    <bean id="itemDao" class="com.minddevicetech.dao.ItemDao" scope="prototype">
+        <property name="abstractDaoAnnotation" ref="abstractDaoAnnotation" />
+    </bean>
+    <bean id="searchDao" class="com.minddevicetech.dao.SearchDao" scope="prototype">
+        <property name="abstractDaoAnnotation" ref="abstractDaoAnnotation" />
+    </bean>
+    <bean id="userrDao" class="com.minddevicetech.dao.UserrDao" scope="prototype">
+        <property name="abstractDaoAnnotation" ref="abstractDaoAnnotation" />
+    </bean>
+   
+    <bean id="utility" class="com.minddevicetech.utility.Utility" scope="prototype">
+        <property name="itemDao" ref="itemDao" />
+    </bean>
+    
+    
+    <!-- Beans -->
+ 
+    <bean id="homeAction" class="com.minddevicetech.web.HomeAction" scope="prototype">
+        <property name="utility" ref="utility" />
+    </bean>
+    <bean id="loginAction" class="com.minddevicetech.web.LoginAction" scope="prototype">
+        <property name="userrDao" ref="userrDao" />
+    </bean>
+    <bean id="logoutAction" class="com.minddevicetech.web.LogoutAction" scope="prototype"></bean>
+    <bean id="billAction" class="com.minddevicetech.web.BillAction" scope="prototype">
+        <property name="billDao" ref="billDao" />
+        <property name="billItemDao" ref="billItemDao" />
+        <property name="utility" ref="utility" />
+    </bean>
+    <bean id="itemAction" class="com.minddevicetech.web.ItemAction" scope="prototype">
+        <property name="itemDao" ref="itemDao" />
+        <property name="utility" ref="utility" />
+    </bean>
+    <bean id="ajaxAction" class="com.minddevicetech.web.AjaxAction" scope="prototype">
+    </bean>
+  
+    <bean id="searchAction" class="com.minddevicetech.web.SearchAction" scope="prototype">
+        <property name="billDao" ref="billDao" />
+        <property name="billItemDao" ref="billItemDao" />
+        <property name="searchDao" ref="searchDao" />
+        <property name="utility" ref="utility" />
+    </bean>
+    <bean id="successMsgAction" class="com.minddevicetech.web.SuccessMsgAction" scope="prototype">
+    </bean>
+   
+   
+</beans>

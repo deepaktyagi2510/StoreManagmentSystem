@@ -1,0 +1,219 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Contains all the ajax call actions. -->
+    <include file="struts-ajax.xml"/>
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+        
+        <action name="home" method="execute" class="homeAction">
+            <result name="success">pages/home.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="login" method="login" class="loginAction">
+            <result name="success" type="chain">home</result>
+            <result name="input">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="logout" method="logout" class="logoutAction">
+            <result name="success">pages/logout.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="success" method="success" class="successMsgAction">
+            <result name="success">pages/success.jsp</result>
+            <result name="successItem">pages/successItem.jsp</result>
+            <result name="successBill">pages/successBill.jsp</result>
+        </action>
+
+        <!-- Configuration for the item related actions. -->
+        <action name="addItem" method="addItem" class="itemAction">
+            <result name="success">pages/addItem.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="processAddItem" method="processAddItem" class="itemAction">
+            <result name="success" type="redirectAction">
+            <param name="actionName">success</param>
+            <param name="message">${message}</param>
+            <param name="jspNameToBeNavigated">${jspNameToBeNavigated}</param>
+            </result>
+            <result name="input">pages/addItem.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="viewItem" method="viewItem" class="itemAction">
+            <result name="success">pages/viewItem.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="viewAllItems" method="viewAllItems" class="itemAction">
+            <result name="success">pages/viewAllItems.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="editItem" method="editItem" class="itemAction">
+            <result name="success">pages/editItem.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="processEditItem" method="processEditItem" class="itemAction">
+            <result name="success" type="redirectAction">
+            <param name="actionName">success</param>
+            <param name="message">${message}</param>
+            <param name="jspNameToBeNavigated">${jspNameToBeNavigated}</param>
+            </result>
+            <result name="input">pages/editItem.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="deleteItem" method="deleteItem" class="itemAction">
+            <result name="success" type="redirectAction">
+            <param name="actionName">success</param>
+            <param name="message">${message}</param>
+            <param name="jspNameToBeNavigated">${jspNameToBeNavigated}</param>
+            </result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+         <!-- Configuration for the bill related actions. -->
+        <action name="createBill" method="createBill" class="billAction">
+            <result name="success">pages/addBill.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="processCreateBill" method="processCreateBill" class="billAction">
+            <result name="success" type="redirectAction">
+            <param name="actionName">success</param>
+            <param name="message">${message}</param>
+            <param name="jspNameToBeNavigated">${jspNameToBeNavigated}</param>
+            <param name="billNoToShowInvoice">${billNoToShowInvoice}</param>
+            </result>
+            <result name="input">pages/addBill.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="viewBill" method="viewBill" class="billAction">
+            <result name="success">pages/viewBill.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="viewAllBills" method="viewAllBills" class="billAction">
+            <result name="success">pages/viewAllBills.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="cancelBill" method="cancelBill" class="billAction">
+            <result name="success" type="redirectAction">
+            <param name="actionName">success</param>
+            <param name="message">${message}</param>
+            <param name="jspNameToBeNavigated">${jspNameToBeNavigated}</param>
+            </result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+        <action name="viewCanceledBills" method="viewCanceledBills" class="billAction">
+            <result name="success">pages/viewCanceledBills.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <!-- Configuration for the search related actions. -->
+        <action name="search" method="search" class="searchAction">
+            <result name="success">pages/search.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="viewSearchBill" method="viewBill" class="billAction">
+            <result name="success">pages/viewSearchBill.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="todaysSell" method="todaysSell" class="searchAction">
+            <result name="success">pages/searchResults.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+         <action name="lastSevenDaysSell" method="lastSevenDaysSell" class="searchAction">
+            <result name="success">pages/searchResults.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="lastThirtyDaysSell" method="lastThirtyDaysSell" class="searchAction">
+            <result name="success">pages/searchResults.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="betweenTwoDatesSell" method="betweenTwoDatesSell" class="searchAction">
+            <result name="success">pages/searchResults.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+         <action name="viewCanceledBillsOwner" method="viewCanceledBillsOwner" class="searchAction">
+            <result name="success">pages/viewCanceledBillsOwner.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="itemWiseSell" method="itemWiseSell" class="searchAction">
+            <result name="success">pages/itemWiseSell.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="viewItemWiseSell" method="viewItemWiseSell" class="searchAction">
+            <result name="success">pages/viewItemWiseSell.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="searchItem" method="searchItem" class="searchAction">
+            <result name="success">pages/searchItem.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+         <action name="processSearchItem" method="processSearchItem" class="searchAction">
+            <result name="success">pages/searchItemResults.jsp</result>
+            <result name="input">pages/searchItem.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="searchBill" method="searchBill" class="searchAction">
+            <result name="success">pages/searchBill.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+        <action name="processSearchBill" method="processSearchBill" class="searchAction">
+            <result name="success">pages/searchBillResults.jsp</result>
+            <result name="input">pages/searchBill.jsp</result>
+            <result name="notLoggedIn">pages/login.jsp</result>
+            <result name="error">pages/error.jsp</result>
+        </action>
+
+    </package>
+</struts>
